@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from sqlalchemy import extract, desc, func, select
+from sqlalchemy import extract, desc, func, select, text
 
 
 from models import Diary
@@ -273,6 +273,7 @@ class DiarySQLAlchemyRepository:
 
         with db_helper.get_session() as session:
             try:
+                session.execute(text('PRAGMA foreign_keys=ON'))
                 session.query(Diary).filter_by(
                     training_count=training_count,
                     user_id=user_id,

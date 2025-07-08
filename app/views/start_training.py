@@ -155,7 +155,7 @@ async def start_rest(message: Message, state: FSMContext):
         await state.set_state(AddExercise.repetition)
         await state.update_data(repetition=int(message.text))
         await state.set_state(AddExercise.start_time)
-        await state.update_data(start_time=str(time.time()))
+        await state.update_data(start_time=time.time())
 
         rest = removes_the_last_zeros(data["rest"])
 
@@ -207,7 +207,7 @@ async def end_rest(message: Message, state: FSMContext):
             reply_markup=get_buttons_add_a_approach(),
         )
     else:
-        rest = removes_the_last_zeros(float[data["rest"]])
+        rest = removes_the_last_zeros(data["rest"])
         await message.answer(
             f"{rest} м. еще не закончились\n\nНапечатайте любой символ по истечении времени отдыха, чтобы продолжить тренировку"
         )

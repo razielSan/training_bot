@@ -32,6 +32,7 @@ class AddCalendar(StatesGroup):
 
 @router.message(F.text == "/admin")
 async def get_menu_for_admin(message: Message):
+    print("Hello")
     """Возвращает меню администратора."""
     message_id = message.message_id - 1
     telegram = message.chat.id
@@ -39,13 +40,10 @@ async def get_menu_for_admin(message: Message):
 
     await bot.delete_message(chat_id=telegram, message_id=message_id)
 
-    if user.status == "admin":
-        await message.answer(
-            "Выберите действие",
-            reply_markup=get_menu_admin(),
-        )
-    else:
-        return
+    await message.answer(
+        "Выберите действие",
+        reply_markup=get_menu_admin(),
+    )
 
 
 @router.message(StateFilter(None), F.text == "Заполнить календарь")

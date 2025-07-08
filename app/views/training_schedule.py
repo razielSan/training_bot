@@ -5,6 +5,7 @@ from aiogram.types import Message, CallbackQuery
 
 from repositories.diary import DiarySQLAlchemyRepository
 from repositories.user import UserSQAlchemyRepository
+from repositories.exercise import ExerciesSQLAlchemyRepository
 from functions import get_training_data
 from keyboards.inline_kb import get_buttons_by_diary
 from extensions import bot
@@ -177,6 +178,8 @@ async def delete_training(call: CallbackQuery):
     user = UserSQAlchemyRepository().get_user(telegram=telegram)
     data = call.data.split(" ")[-1]
     training_count, year, month, day, hour = data.split(".")
+
+
     diary, mess = DiarySQLAlchemyRepository().delete_diary(
         user_id=user.id,
         training_count=int(training_count),
@@ -185,6 +188,7 @@ async def delete_training(call: CallbackQuery):
         day=int(day),
         hour=int(hour),
     )
+    
     if diary:
         await bot.delete_message(
             chat_id=telegram,
