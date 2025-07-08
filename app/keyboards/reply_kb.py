@@ -1,4 +1,5 @@
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
+from aiogram.utils.keyboard import ReplyKeyboardBuilder
 
 
 def get_menu_reply_kb():
@@ -59,11 +60,11 @@ def get_button_update_calendar():
     return reply_kb
 
 
-def get_button_by_exercies():
+def get_button_by_exercies(rest=False,):
     """Кнопки для FSM заполнения упражнения."""
-    reply_kb = ReplyKeyboardMarkup(
-        keyboard=[
-            [KeyboardButton(text="<<Отменa>>")],
-        ]
-    )
-    return reply_kb
+    reply_kb = ReplyKeyboardBuilder()
+    if rest:
+        reply_kb.add(KeyboardButton(text="пропустить отдых"))
+    reply_kb.row(KeyboardButton(text="<<Отменa>>"))
+
+    return reply_kb.as_markup()

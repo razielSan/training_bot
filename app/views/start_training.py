@@ -160,7 +160,9 @@ async def start_rest(message: Message, state: FSMContext):
         rest = removes_the_last_zeros(data["rest"])
 
         await message.answer(
-            f"Время отдыха {rest} м.\n\nНапечатайте любой символ по истечении времени отдыха, чтобы продолжить тренировку"
+            f"Время отдыха {rest} м.\n\nНапечатайте любой символ по истечении времени отдыха, чтобы продолжить тренировку или нажмите 'пропустить отдых'",
+            reply_markup=get_button_by_exercies(rest=True,)
+
         )
 
         await state.set_state(AddExercise.end_time)
@@ -177,7 +179,11 @@ async def end_rest(message: Message, state: FSMContext):
     rest = data["rest"] * 60
     start_time = data["start_time"]
     end_time = time.time()
-    if end_time - start_time > rest:
+
+    result_time = end_time - start_time
+    print(result_time)
+    print(rest)
+    if result_time > rest or message.text == "пропустить отдых":
         data = await state.get_data()
         exercise = data["exercise"]
         approach = data["approach"]
@@ -209,5 +215,6 @@ async def end_rest(message: Message, state: FSMContext):
     else:
         rest = removes_the_last_zeros(data["rest"])
         await message.answer(
-            f"{rest} м. еще не закончились\n\nНапечатайте любой символ по истечении времени отдыха, чтобы продолжить тренировку"
+            f"Прошло {int(result_time)} c.\n\n{rest} м. еще не закончились\n\nНапечатайте любой символ по истечении времени отдыха, чтобы продолжить тренировку или нажмите 'пропустить отдых'",
+            reply_markup=get_button_by_exercies(rest=True)
         )
