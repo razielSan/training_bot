@@ -181,8 +181,6 @@ async def end_rest(message: Message, state: FSMContext):
     end_time = time.time()
 
     result_time = end_time - start_time
-    print(result_time)
-    print(rest)
     if result_time > rest or message.text == "пропустить отдых":
         data = await state.get_data()
         exercise = data["exercise"]

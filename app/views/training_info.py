@@ -18,17 +18,11 @@ async def info_training(call: CallbackQuery):
     chat_id = call.message.chat.id
     message_id = call.message.message_id
     training_count, year, month, day, hour = data.split(".")
-    print(call.message.chat.id)
-    print(call.message.from_user.id)
     dtime = datetime(year=int(year), month=int(month), day=int(day), hour=int(hour))
     user = UserSQAlchemyRepository().get_user(telegram=chat_id)
-    print(user.id)
     diary_list = DiarySQLAlchemyRepository().get_diary(
         date=dtime, user_id=user.id, training_count=int(training_count)
     )
-    for diary in diary_list:
-        for d in diary.exercise_detail:
-            print(d.exercise)
     data = get_training_info(list_diary=diary_list, user_id=user.id)
 
     await bot.delete_message(chat_id=chat_id, message_id=message_id)

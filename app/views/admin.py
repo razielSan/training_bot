@@ -32,7 +32,6 @@ class AddCalendar(StatesGroup):
 
 @router.message(F.text == "/admin")
 async def get_menu_for_admin(message: Message):
-    print("Hello")
     """Возвращает меню администратора."""
     message_id = message.message_id - 1
     telegram = message.chat.id

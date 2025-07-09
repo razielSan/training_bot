@@ -16,7 +16,6 @@ router = Router(name=__name__)
 async def start(message: Message):
     """Реакция бот на нажатие /start."""
     name = message.from_user.first_name
-    print(name, 1111)
     telegram = message.chat.id
     message_id = message.message_id - 1
 
