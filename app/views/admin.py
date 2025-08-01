@@ -49,9 +49,7 @@ async def get_menu_for_admin(message: Message):
 async def add_calendar(message: Message, state: FSMContext):
     """Реакция на кнопку 'Заполнить календарь' в FSM."""
     telegram = message.chat.id
-    user = UserSQAlchemyRepository().get_user(telegram=telegram)
-    if user.status != "admin":
-        return
+
     await message.answer(
         "Введите год",
         reply_markup=get_button_update_calendar(),
