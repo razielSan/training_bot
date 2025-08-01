@@ -6,7 +6,7 @@ from config import settings
 
 dp = Dispatcher()
 bot = Bot(token=settings.TOKEN)
-bot.my_admins_list = [1383179677]
+bot.my_admins_list = []
 
 
 class Base(DeclarativeBase):
